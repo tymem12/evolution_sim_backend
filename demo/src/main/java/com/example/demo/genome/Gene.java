@@ -3,10 +3,11 @@ package com.example.demo.genome;
 import java.io.Serializable;
 
 import com.example.demo.genome.nodes.Node;
+import com.example.demo.utils.MathLib;
 
 public class Gene implements Serializable{
     
-    private int byte_representation;
+    private String byte_representation;
     private int number_of_be;
     private int number_type_of_input_node;
     private int number_type_of_output_node;
@@ -14,12 +15,18 @@ public class Gene implements Serializable{
     private Node output_node;
     private double weight;
 
+    //constructor for first initialization
+    public Gene(){
+        this.byte_representation = MathLib.generateRandomBits(32);
+        //03.02- tutaj skończone
+    }
 
 
-    public int getByte_representation() {
+
+    public String getByte_representation() {
         return byte_representation;
     }
-    public void setByte_representation(int byte_representation) {
+    public void setByte_representation(String byte_representation) {
         this.byte_representation = byte_representation;
     }
     public int getNumber_of_be() {
