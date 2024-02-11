@@ -9,20 +9,19 @@ public class Simulation {
     int number_of_indivduals;
     int width;
     int hight;
-    Area area;
+    Enviroment area;
 
     ArrayList<Individual> individual_list;
 
-    public Simulation(Settings settings ){
+    public Simulation(Settings settings){
         individual_list = new ArrayList<>();
         for(int i = 0; i < number_of_indivduals; i++){
             individual_list.add(new Individual(settings));
         }
-        area = new Area();
+        area = new Enviroment(settings);
+        
 
         // coś observer lub MVC żeby wyśetlana macierz zobaczyła
-
-
     }
     
     public void preperaFirstGeneration(){

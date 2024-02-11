@@ -7,7 +7,7 @@ public class Individual {
     Genome genome;
     
     public Individual(Settings settings){
-        genome = new Genome(settings.getNUMBER_OF_GENES());
+        genome = new Genome(settings);
 
     }
 

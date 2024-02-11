@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,43 +10,32 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		// SpringApplication.run(DemoApplication.class, args);
-		Character[] vowelss = {'a','e', 'i', 'o', 'u'};
-        ArrayList<Character> vowels = new ArrayList<Character>();
-        Collections.addAll(vowels, vowelss); 
-        
-        String s = "Hello";
-        int len_str = s.length();
-        // if (len_str == 1) ret s;
-        int left_index = -1;
-        int right_index = -1;
-        StringBuilder string = new StringBuilder(s);
-        for(int i = 0, j = len_str -1;i < j; i++, j-- ){
-            if (!vowels.contains(s.charAt(i)) && !vowels.contains(s.charAt(j))){
-                System.out.println(!vowels.contains(s.charAt(i)));
-                System.out.println(!vowels.contains(s.charAt(j)));
-                System.out.println(vowels.get(0));
+        int[][] grid = {{3,2,1}, {1,7,6}, {2,7,7}}; 
+		HashMap<List<Integer>, Integer> map = new HashMap();
+        for(int i = 0; i< grid.length; i++){
+            int j = i;
+            List<Integer> columns = Arrays.stream(grid)
+                              .mapToInt(r -> r[j])
+                              .boxed()
+                              .collect(Collectors.toList());
 
-            continue;
-            }
-
-            else if (vowels.contains(s.charAt(i)) && !vowels.contains(s.charAt(j))){
-                 i--;
-            }
-            else if (!vowels.contains(s.charAt(i))&& vowels.contains(s.charAt(j))){
-                 j++;
-            }
-            else{
-                string.setCharAt(i, s.charAt(j));
-                string.setCharAt(j, s.charAt(i));
-
-            }
-
-            
-
+            List<Integer> rows = Arrays.stream(grid[i])
+                           .boxed()
+                           .collect(Collectors.toList());
+            if(map.containsKey(columns)) map.put(columns, map.get(columns) + 1);
+            else map.put(columns, 1); 
+            if(map.containsKey(rows)) map.put(rows, map.get(rows) + 1);
+            else map.put(rows, 1); 
         }
-        System.out.println(string.toString());
-           
+
+        int sum = 0;
+        for(List<Integer> elem : map.keySet()){
+            Integer count = map.get(elem);
+            sum += ((count * (count -1))/2);
+            
+        }
+
+    System.out.println(sum);
 	}
 
 }

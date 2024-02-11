@@ -1,40 +1,47 @@
 package com.example.demo.genome;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+import com.example.demo.Settings;
 import com.example.demo.genome.nodes.Node;
 import com.example.demo.utils.MathLib;
 
-public class Gene implements Serializable{
+public class Gene extends GeneType implements Serializable{
     
-    private String byte_representation;
-    private int number_of_be;
+    private int input_node_type;
+    private int output_node_type;
     private int number_type_of_input_node;
     private int number_type_of_output_node;
     private Node input_node;
     private Node output_node;
     private double weight;
+    private int id;
+
 
     //constructor for first initialization
-    public Gene(){
-        this.byte_representation = MathLib.generateRandomBits(32);
+    public Gene(Settings settings){
+        
+        this.byte_representation = "0" + MathLib.generateRandomBits(31);
+        this.input_node_type = this.byte_representation.charAt(1);
+        this.number_type_of_input_node = MathLib.binaryStringToInt(MathLib.getSubstring(this.byte_representation, 2,8))
+         % ((this.input_node_type == 0) ? settings.getNUMBER_OF_POSSIBLE_SENSOR_NODES() : settings.getNUMBER_OF_POSSIBLE_NEURON_NODES());
+        this.output_node_type = this.byte_representation.charAt(9);
+        this.number_type_of_output_node = MathLib.binaryStringToInt(MathLib.getSubstring(this.byte_representation, 10,16))
+        % ((this.output_node_type == 0) ? settings.getNUMBER_OF_POSSIBLE_ACTION_NODES() : settings.getNUMBER_OF_POSSIBLE_NEURON_NODES());
+        
+        this.weight = (double)MathLib.binaryStringToInt(MathLib.getSubstring(this.byte_representation, 17,31)) / 32768.0;
+        String concatenatedAttributes = input_node_type +
+                                       "-" + output_node_type +
+                                       "-" + number_type_of_input_node +
+                                       "-" + number_type_of_output_node;
+
+        this.id = Objects.hash(concatenatedAttributes);
+       
         //03.02- tutaj skończone
     }
-
-
-
-    public String getByte_representation() {
-        return byte_representation;
-    }
-    public void setByte_representation(String byte_representation) {
-        this.byte_representation = byte_representation;
-    }
-    public int getNumber_of_be() {
-        return number_of_be;
-    }
-    public void setNumber_of_be(int number_of_be) {
-        this.number_of_be = number_of_be;
-    }
+  
+  
     public int getNumber_type_of_input_node() {
         return number_type_of_input_node;
     }
@@ -79,5 +86,12 @@ public class Gene implements Serializable{
         return false;
         
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

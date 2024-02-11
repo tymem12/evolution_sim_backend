@@ -1,0 +1,2 @@
+1. dokładnie rozważyć TraiNode jak to będzie działało, jak to zapilmenetować.
+2. rozważyć podział ActivationFunction z interfejsem .

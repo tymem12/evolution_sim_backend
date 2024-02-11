@@ -36,5 +36,9 @@ public class MathLib {
         return binaryString.substring(startIndex, endIndex + 1);
     }
 
+    public static double getRandomDouble() {
+        Random random = new Random();
+        return random.nextDouble();
+    }
     
 }
